@@ -18,6 +18,8 @@ test("Navigating To Sign-In Page & Sign In/Out Successfully", async () => {
     await myTest.getElement(myTest.SignIn1)
     await myTest.click(myTest.SignIn1)
     expect(await myTest.getText(myTest.Results)).toContain("Welcome to your account.")
+    await myTest.takeScreenshot(`${__dirname}/Screenshots/SignedInSuccessfully`)
+    await driver.sleep(5000)
     await myTest.getElement(myTest.SignOut)
     await myTest.click(myTest.SignOut)
 })
