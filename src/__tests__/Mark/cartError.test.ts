@@ -3,7 +3,7 @@ import { myPage } from "./myPage";
 
 const driver = new Builder().withCapabilities(Capabilities.firefox()).build()
 
-//This Test File Tests The Add To Cart Error Message
+//This Test File Tests The Add To Cart Error Message.
 
 //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-23
 test("Cart Page Functionality w/o Checking The Terms Of Service Box", async () => {

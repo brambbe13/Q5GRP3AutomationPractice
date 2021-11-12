@@ -3,7 +3,7 @@ import { myPage } from "./myPage";
 
 const driver = new Builder().withCapabilities(Capabilities.firefox()).build()
 
-//This Test File Tests The Sign-In Page
+//This Test File Tests The Sign-In Page.
 
 //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-5
 test("Navigating To Sign-In Page & Sign In/Out Successfully", async () => {
@@ -37,7 +37,7 @@ describe("Sign-In Scenrio's", async () => {
         expect(await myTest.getText(myTest.ErrorResults)).toContain("Authentication failed.")
     })
 
-    //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-7  
+    //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-7
     test("Sign In w/An Incorrect Password", async () => {
         await myTest.navigate()
         await myTest.getElement(myTest.EmailField)
@@ -49,7 +49,7 @@ describe("Sign-In Scenrio's", async () => {
         expect(await myTest.getText(myTest.ErrorResults)).toContain("Authentication failed.")
     })
 
-    //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-9  
+    //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-9
     test("Sign In w/Blank Email Field", async () => {
         await myTest.navigate()
         await myTest.getElement(myTest.PassField)

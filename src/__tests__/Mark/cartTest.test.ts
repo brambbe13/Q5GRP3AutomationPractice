@@ -3,7 +3,7 @@ import { myPage } from "./myPage";
 
 const driver = new Builder().withCapabilities(Capabilities.firefox()).build()
 
-//This Test File Tests The Add To Cart Process
+//This Test File Tests The Add To Cart Process.
 
 //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-14 
 test("Cart Page & Process Flow Before User Is Signed In", async () => {

@@ -38,6 +38,5 @@ export class myPage extends BasePage {
         else console.log("Screenshot Saved Successfully");
       }
     )
-
   }
 }
