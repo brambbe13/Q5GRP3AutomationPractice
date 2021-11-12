@@ -1,6 +1,7 @@
 import { BasePage } from "../PageObjects/PageObjects";
 import { By, until,  } from "selenium-webdriver";
 import * as signInData from "./signInData.json"
+const fs = require("fs");
 
 
 export class myDressPage extends BasePage {
@@ -23,30 +24,34 @@ export class myDressPage extends BasePage {
   viscoseComp: By = By.css("input[value='3_5']") //$$('input[value="3_5"]')
   casualStyle: By = By.css("input[value='11_6']") //$$('input[value="11_6"]')
   Maxi: By =By.css("input[value='21_7']") //$$('input[value="21_7"]')
-  filterResults: By =By.id('//div[id="layered_ajax_loader"]//img[src="http://automationpractice.com/img/loader/gif"]')
+  filterResults: By =By.xpath('//ul[@class="product_list grid row"]//img[@src="http://automationpractice.com/img/loader.gif"]')
   searchName: By =By.css("//h1[@class= 'page-heading  product-listing']//span[@class='lighter']") //$$('[class="lighter"]')
   //MultipleReviews
-  printedDress: By =By.css("a[itemprop='url'])[5]") //$$('a[itemprop="url"]')[5]
-  writeReviewButton: By = By.className("open-comment-form") //$$('input[class="open-comment-form"]')
+  //printedDressContainer: By =By.css("[class='product-container']")
+  //printedDressMore: By =By.css("a[itemprop='url'][5]") //$$('a[itemprop="url"]')[5]
+  chiffonDress: By =By.xpath('(//a[@title="Printed Chiffon Dress"])[1]') //$x('//a[@title="Printed Chiffon Dress"]')[1]
+  printedDress: By =By.css('[title="Printed Dress"][5]') //$$('[title="Printed Dress"]')[5]
+  writeReviewButton: By = By.xpath('//a[@class="open-comment-form"]') //$x('//a[@class="open-comment-form"]')
   reviewTitle: By = By.id("comment_title") //$$('input[id="comment_title"]')
   reviewComment: By =By.css("textarea[id='content']") //$$('textarea[id="content"]')
-  reviewSend: By =By.css("button[id='submitNewMessage']") //$$('button[id="submitNewMessage"]')
+  reviewSend: By = By.css("button[id='submitNewMessage']") //$$('button[id="submitNewMessage"]')
   //Wishlist
+  listView: By = By.css('i[class="icon-th-list"]') //$$('i[class="icon-th-list"]')
   customerAccount: By =By.css('a[title="View my customer account"]') //$$('a[title="View my customer account"]')
   myWishlist: By = By.css("a[title='My wishlists']") //$$('a[title="My wishlists"]')
   wishlistNameInput: By =By.className("inputTxt form-control") //$$('input[class="inputTxt form-control"]')
   wishlistSave: By = By.id("submitWishlist") //$$('button[id="submitWishlist"]')
-  addToWishlist: By =By.id("wishlist_button") //$$('a[id="wishlist_button"]')
+  addToWishlist: By =By.css("[class='addToWishlist wishlistProd_4']") //$$('[class="addToWishlist wishlistProd_4"]')
   wishlistName: By =By.css("id='wishlist_41125'") //$$('[id="wishlist_41125"]')
   closeConfirmMessg: By =By.css('a[class="fancybox-item fancybox-close"]') //$$('a[class="fancybox-item fancybox-close"]')
-  wishlistView: By =By.css('(a[href="javascript:;"])[1]') //$$("a[href="javascript:;"]')[1]
+  wishlistView: By =By.xpath('(//a[@onclick])[1]') //$$('a[onclick]')[1] working
   productName: By =By.id('s_title')
   
 
     //navigating to the url
     async navigate() {
     await this.driver.get(this.url);
-    }
+    };
     //sign in
     async signIn(): Promise<void> {
       await this.driver.wait(until.elementLocated(this.LoginButton));
@@ -56,28 +61,8 @@ export class myDressPage extends BasePage {
       await (await this.driver.findElement(this.passwordField)).sendKeys(signInData.password);
       await (await this.driver.findElement(this.SignInEmailButton)).click();
       return await this.driver.wait(until.elementLocated(this.customerAccount)).click();
-    }
-    //Selecting filter
-    // async filterSelection(){
-    //   //I was thinking of using a for Each loop to check each of the boxes
-    //   let categoryFilters: Array <By> = await [
-    //     //this.dressesButton, 
-    //     this.summerDressCat,
-    //     this.size,
-    //     this.blackColor,
-    //     this.viscoseComp,
-    //     this.casualStyle,
-    //     this.Maxi
-    //    ]
-       
-    //    categoryFilters.forEach (async (elementBy) => {
-    //     await this.driver.wait(until.elementLocated(elementBy));
-    //     await this.driver.findElement(elementBy).click();
-      
-
-    //    })
-  
-    // }
+    };
+    
     async Filters(){
       await this.driver.wait(until.elementLocated(this.summerDressCat));
       await this.driver.findElement(this.summerDressCat).click();
@@ -91,50 +76,34 @@ export class myDressPage extends BasePage {
       await this.driver.findElement(this.casualStyle).click();
       await this.driver.wait(until.elementLocated(this.Maxi));
       await this.driver.findElement(this.Maxi).click();
-    }
-    async addItemToWishlist(){
-      await this.driver.wait(until.elementLocated(this.printedDress));
-      await this.driver.findElement(this.printedDress).click();
-      await this.driver.wait(until.elementLocated(this.addToWishlist));
-      await this.driver.findElement(this.addToWishlist).click();
-      await this.driver.wait(until.elementLocated(this.closeConfirmMessg));
-      await this.driver.findElement(this.closeConfirmMessg).click();
-
-    }
-    // async CreateWishlist(text: string, ){
-    //   await this.driver.wait(until.elementLocated(this.customerAccount));
-    //   await this.driver.findElement(this.customerAccount).click();
-    //   await this.driver.wait(until.elementLocated(this.myWishlist));
-    //   await this.driver.findElement(this.myWishlist).click();
-    //   await this.driver.wait(until.elementLocated(this.wishlistNameInput));
-    //   await this.driver.findElement(this.wishlistNameInput).click();
-    //   await this.sendKeys(this.wishlistNameInput,`${text}\n`);
-    //   await this.driver.wait(until.elementLocated(this.wishlistSave));
-    //   await this.driver.findElement(this.wishlistSave).click();
-      // expect(await(await this.driver.findElement(this.wishlistName)).getAttribute("value")).toBe(`${text}\n`);
-
-    //}
+    };
+    async takeScreenshot(filepath: string) {
+      fs.writeFile(
+        `${filepath}.png`,
+        await this.driver.takeScreenshot(),
+        "base64",
+        (e) => {
+          if (e) console.log(e);
+          else console.log("screenshot saved successfully");
+        }
+      );
+    };
     
     async sendKeys(elementBy: By, keys ) {
       await this.driver.wait(until.elementLocated(elementBy));
       return this.driver.findElement(elementBy).sendKeys(keys);
     
-    }
+    };
     async findElement(elementBy: By, keys){
       await this.driver.wait(until.elementLocated(elementBy));
       await this.driver.findElement(elementBy).click();
 
-    }
+    };
     async getText(elementBy: By){
       await this.driver.wait(until.elementLocated(this.reviewTitle));
       return (await this.driver.findElement(elementBy)).getText();
-    }
-    async writeReview(text: string){
-      await this.driver.wait(until.elementLocated(this.writeReviewButton));
-      await this.driver.findElement(this.writeReviewButton).click();
-      return this.sendKeys(this.reviewTitle,`${text}\n`) && (this.reviewComment, `${text}\n`)
-
-    }
+    };
+    
     
 
 }
