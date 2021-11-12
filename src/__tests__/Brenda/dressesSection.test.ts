@@ -9,23 +9,25 @@ const driver= new Builder()
 
 const dressTest = new myDressPage (driver,"http://automationpractice.com/index.php");
 
-//let summerDressCat = dressTest.driver.findElement(dressTest.summerDressCat)
-//let size =dressTest.driver.findElement(dressTest.size)
-//Test #1 Selecting filters
+
+
 describe("Dresses Section", () => {
     beforeEach(async () =>{
         await dressTest.navigate()
         await dressTest.signIn();
-        // expect("Josh").toBe(Truthy);
+        
         });
         afterAll(async () => {
             await driver.quit();
         });
-    //Test #1 Can use filters to find a specific item
+    
     test('Can filter through dresses test',async() => {
+        /*
+         This test clicks on selected category filters in the Dresses section.
+         After they are selected a screenshot is taken of the results.
+         */
         let dressesButton = dressTest.driver.findElement(dressTest.dressesButton)
-        let searchName = await driver.findElement(dressTest.searchName).getText()
-
+    
         await dressTest.driver.wait(until.elementLocated(dressTest.dressesButton)) 
         await dressesButton.click();
         await dressTest.driver.sleep(1000)
@@ -42,43 +44,82 @@ describe("Dresses Section", () => {
         await dressTest.driver.wait(until.elementLocated(dressTest.Maxi));
         await dressTest.driver.findElement(dressTest.Maxi).click();
         await dressTest.driver.sleep(1000)
-        //expect(searchName).toBe("demo model_05")
-         
-    
-    
-    
+        await dressTest.takeScreenshot(`src/__tests__/Brenda/Brenda.Screenshots/filterResults-${Date.now()}`);
+
     });
-    //Test #2 User can add multiple reviews on same item
-    // test('Can add a review test', async () =>{
-    //     let dressesButton = dressTest.driver.findElement(dressTest.dressesButton)
-    //     await dressTest.driver.wait(until.elementLocated(dressTest.dressesButton))
-    //     await dressesButton.click(); 
-    //     await dressTest.getElement(dressTest.printedDress)
-    //     await dressTest.click(dressTest.printedDress)
-    //     await dressTest.writeReview("Loved it") && ("This dress fits perfectly! Will order again")
-    //     expect().toBe()
     
-    //  });
+    test('Can add a review test', async () =>{
+        /**This test is to see if user can write a review and be submitted
+         */
+        let dressesButton = dressTest.driver.findElement(dressTest.dressesButton)
 
-    //  test('Can add items to myWishlist lists', async () => { 
-    //      let customerAccount = dressTest.driver.findElement(dressTest.customerAccount)
-    //      let myWishlist =dressTest.driver.findElement(dressTest.myWishlist)
-    //      let wishlistView =dressTest.driver.findElement(dressTest.wishlistView)
-    //      let productName = await driver.findElement(dressTest.productName).getText()
-
-    //     await dressTest.driver.wait(until.elementLocated(dressTest.dressesButton))
-    //     await (await dressTest.driver.findElement(dressTest.dressesButton)).click();
-    //     await dressTest.driver.sleep(1000)
-    //     await dressTest.addItemToWishlist();
-    //     await customerAccount.click();
-    //     await dressTest.driver.sleep(1000)
-    //     await myWishlist.click();
-    //     await wishlistView.click();
-    //     expect(productName).toBe(" Printed Dress ")
-
-
+        await dressTest.navigate();
+        await dressTest.driver.wait(until.elementLocated(dressTest.dressesButton)) 
+        await dressesButton.click();
+        await dressTest.driver.sleep(1000)
+        await dressTest.driver.wait(until.elementLocated(dressTest.chiffonDress))
+        await (await dressTest.driver.findElement(dressTest.chiffonDress)).click();
+        await dressTest.driver.sleep(3000)
+        await dressTest.driver.wait(until.elementLocated(dressTest.writeReviewButton));
+        await dressTest.driver.findElement(dressTest.writeReviewButton).click();
+        await dressTest.driver.wait(until.elementLocated(dressTest.reviewTitle));
+        await dressTest.driver.findElement(dressTest.reviewTitle).click();
+        await dressTest.sendKeys(dressTest.reviewTitle,`${"Loved it"}\n`)
+        await dressTest.driver.wait(until.elementLocated(dressTest.reviewComment));
+        await dressTest.driver.findElement(dressTest.reviewComment).click();
+        await dressTest.sendKeys(dressTest.reviewComment,`${"This dress fits perfectly! Will order again"}\n`)
+        await dressTest.driver.wait(until.elementLocated(dressTest.reviewSend))
+        await (await dressTest.driver.findElement(dressTest.reviewSend)).click();
+        await dressTest.driver.sleep(5000)
+        await dressTest.takeScreenshot(`src/__tests__/Brenda/Brenda.Screenshots/ReviewResults-${Date.now()}`);
     
-    //  });
+     });
+
+     test('Can add items to myWishlist lists', async () => { 
+         /** This test focuses on whether an user can add an item to their wishlist account
+          */
+        await dressTest.navigate();
+        await dressTest.driver.wait(until.elementLocated(dressTest.dressesButton))
+        await (await dressTest.driver.findElement(dressTest.dressesButton)).click();
+        await dressTest.driver.wait(until.elementLocated(dressTest.listView))
+        await (await dressTest.driver.findElement(dressTest.listView)).click();
+        await dressTest.driver.sleep(1000)
+        await dressTest.driver.wait(until.elementLocated(dressTest.addToWishlist))
+        await (await dressTest.driver.findElement(dressTest.addToWishlist)).click();
+        await dressTest.driver.sleep(1000)
+        await dressTest.driver.wait(until.elementLocated(dressTest.closeConfirmMessg))
+        await (await dressTest.driver.findElement(dressTest.closeConfirmMessg)).click();
+        await dressTest.driver.sleep(1000)
+        await dressTest.driver.wait(until.elementLocated(dressTest.customerAccount))
+        await (await dressTest.driver.findElement(dressTest.customerAccount)).click();
+        await dressTest.driver.sleep(1000)
+        await dressTest.driver.wait(until.elementLocated(dressTest.myWishlist))
+        await (await dressTest.driver.findElement(dressTest.myWishlist)).click();
+        await dressTest.driver.sleep(1000)
+        await dressTest.driver.wait(until.elementLocated(dressTest.wishlistView))
+        await (await dressTest.driver.findElement(dressTest.wishlistView)).click();
+        await dressTest.driver.sleep(3000)
+        await dressTest.takeScreenshot(`src/__tests__/Brenda/Brenda.Screenshots/wishListResults-${Date.now()}`);
+     });
+     test("Can Create New Wishlist", async ()=>{
+         /** thi test focuses on the user's ability to create a new
+          * wishlist under their account
+          */
+        await dressTest.navigate();
+        await dressTest.driver.wait(until.elementLocated(dressTest.customerAccount))
+        await (await dressTest.driver.findElement(dressTest.customerAccount)).click();
+        await dressTest.driver.sleep(1000)
+        await dressTest.driver.wait(until.elementLocated(dressTest.myWishlist))
+        await (await dressTest.driver.findElement(dressTest.myWishlist)).click();
+        await dressTest.driver.wait(until.elementLocated(dressTest.wishlistNameInput));
+        await dressTest.driver.findElement(dressTest.wishlistNameInput).click();
+        await dressTest.sendKeys(dressTest.wishlistNameInput,`${"Graduation"}\n`);
+        await dressTest.driver.wait(until.elementLocated(dressTest.wishlistSave));
+        await dressTest.driver.findElement(dressTest.wishlistSave).click();
+        await dressTest.driver.sleep(3000)
+        await dressTest.takeScreenshot(`src/__tests__/Brenda/Brenda.Screenshots/wishListCreationResults-${Date.now()}`);
+
+     })
     
     
  });
