@@ -7,8 +7,9 @@ const driver = new Builder().withCapabilities(Capabilities.firefox()).build()
 
 //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-5
 test("Navigating To Sign-In Page & Sign In/Out Successfully", async () => {
-    const myTest = new myPage(driver, "http://automationpractice.com/index.php")
+    const myTest = new myPage(driver, "https://juiceshop.com/")
     await myTest.navigate()
+    await console.log("Website loaded successfully.")
     await myTest.getElement(myTest.SignIn)
     await myTest.click(myTest.SignIn)
     await myTest.getElement(myTest.EmailField)
@@ -27,7 +28,7 @@ test("Navigating To Sign-In Page & Sign In/Out Successfully", async () => {
 describe("Sign-In Scenrio's", async () => {
     const myTest = new myPage(driver, "http://automationpractice.com/index.php?controller=authentication&back=my-account")
 
-    //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-6 
+    //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-6
     test("Sign In w/An Unregistered Email", async () => {
         await myTest.navigate()
         await myTest.getElement(myTest.EmailField)
@@ -61,7 +62,7 @@ describe("Sign-In Scenrio's", async () => {
         expect(await myTest.getText(myTest.ErrorResults)).toContain("email address required")
     })
 
-    //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-10 
+    //Test Case URL: https://dmutah.atlassian.net/browse/PT5G3-10
     test("Sign In w/Blank Password Field", async () => {
         await myTest.navigate()
         await myTest.getElement(myTest.EmailField)

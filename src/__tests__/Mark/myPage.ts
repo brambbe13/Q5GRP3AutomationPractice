@@ -5,7 +5,7 @@ const fs = require("fs")
 
 export class myPage extends BasePage {
 
-  SignIn: By = By.className("login")
+  SignIn: By = By.className("")
   EmailField: By = By.id("email")
   PassField: By = By.id("passwd")
   SignIn1: By = By.className("icon-lock left")
